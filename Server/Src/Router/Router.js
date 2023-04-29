@@ -5,7 +5,7 @@ const Router = Express.Router();
 
 
 // C == Create 
-Router.post("/Create", Controller.Create)
+Router.get("/Create", Controller.Create)
 
 // R == Read 
 Router.get("/Read", Controller.Read)

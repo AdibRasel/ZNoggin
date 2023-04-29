@@ -3,21 +3,28 @@ const ClientModel = require("../Model/ClientModel")
 // C == Reate
 exports.Create=(Req, Res)=>{
     let ReqBody = Req.body;
-    ClientModel.create(ReqBody, (Error, Data)=>{
-        if(Error){
-            Req.status(400)
-            Res.json({
-                Status:"Create Fail (Error)",
-                Data:Error
-            })
-        }else{
-            Req.status(200)
-            Res.json({
-                Status:"Create Fail (Success)",
-                Data:Data
-            })
-        }
+    // ClientModel.create(ReqBody, (Error, Data)=>{
+    //     if(Error){
+    //         Res.status(400)
+    //         Res.json({
+    //             Status:"Create Fail (Error)",
+    //             Data:Error
+    //         })
+    //     }else{
+    //         Res.status(200)
+    //         Res.json({
+    //             Status:"Create Fail (Success)",
+    //             Data:Data
+    //         })
+    //     }
+    // })
+    ClientModel.create( ReqBody )
+    .then((newDocument) => {
+        console.log(newDocument);
     })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
 
@@ -32,21 +39,37 @@ exports.Read=(Req, Res)=>{
     // let Query = Req.body;
     let Query = {};
     let Projection = "ClientID TodaysDate LastName FirstName ClientOrSomeoneElse PhonNumber EmailAddress DateOfBirth TrainingLocation Gender Handedness Midications Timezone Medication Supplements EmotionalSelfAwareness HaveYouEverRecivedOfFollowing"
-    ClientModel.find(Query, Projection, (Error, Data)=>{
-        if(Error){
-            Req.status(400)
+    // ClientModel.find(Query, Projection, (Error, Data)=>{
+    //     if(Error){
+    //         Res.status(400)
+    //         Res.json({
+    //             Status:"Read Fail (Error)",
+    //             Data:Error
+    //         })
+    //     }else{
+    //         Res.status(200)
+    //         Res.json({
+    //             Status:"Read Fail (Success)",
+    //             Data:Data
+    //         })
+    //     }
+    // })
+    ClientModel.find( (Query, Projection) ,(Error, Data)=>{
+      if(Error){
+            Res.status(400)
             Res.json({
                 Status:"Read Fail (Error)",
                 Data:Error
             })
         }else{
-            Req.status(200)
+            Res.status(200)
             Res.json({
                 Status:"Read Fail (Success)",
                 Data:Data
             })
         }
     })
+
 }
 
 
@@ -57,19 +80,20 @@ exports.Update =(Req, Res)=>{
     let ReqBody = Req.body;
     ClientModel.updateOne(Query, ReqBody, (Error, Data)=>{
         if(Error){
-            Req.status(400)
+            Res.status(400)
             Res.json({
                 Status:"Update Fail (Error)",
                 Data:Error
             })
         }else{
-            Req.status(200)
+            Res.status(200)
             Res.json({
                 Status:"Update Fail (Success)",
                 Data:Data
             })
         }
     })
+
 }
 
 
@@ -80,13 +104,13 @@ exports.Delete = (Req, Res)=>{
     let Query = {_id : Id};
     ClientModel.remove(Query, (Error, Data)=>{
         if(Error){
-            Req.status(400)
+            Res.status(400)
             Res.json({
                 Status:"Update Fail (Error)",
                 Data:Error
             })
         }else{
-            Req.status(200)
+            Res.status(200)
             Res.json({
                 Status:"Update Fail (Success)",
                 Data:Data
